@@ -1,0 +1,121 @@
+/* ==========================================================================
+   GROWWISE RESEARCH - DESIGN TOKENS & SYSTEM VARIABLES
+   Editorial Luxury meets Tactile Precision
+   ========================================================================== */
+
+:root {
+  /* Minimalist High-Authority Editorial Palette: Black, Off-White, Subtle Slate */
+  --color-paper-base: #FAF9F6;
+  --color-paper-subtle: #F2F1EC;
+  --color-surface: #FFFFFF;
+  --color-surface-hover: #F8F8F6;
+  --color-surface-elevated: #FFFFFF;
+  
+  /* Text & Ink: High-contrast pure black and balanced neutrals */
+  --color-ink-primary: #0F141A;
+  --color-ink-secondary: #475467;
+  --color-ink-muted: #667085;
+  --color-ink-faint: #D0D5DD;
+  
+  /* Borders & Clean Hairlines */
+  --color-border-subtle: rgba(15, 20, 26, 0.08);
+  --color-border-medium: rgba(15, 20, 26, 0.16);
+  --color-border-accent: rgba(13, 148, 136, 0.35);
+  
+  /* Purposeful Interactive Accent Tones */
+  --color-brand-navy: #0A1E36;
+  --color-brand-teal: #0D9488;
+  --color-brand-teal-light: #E6F7F5;
+  --color-brand-teal-dark: #0F766E;
+  --color-brand-amber: #D97706;
+  --color-brand-amber-light: #FEF3C7;
+  --color-brand-rose: #E11D48;
+  --color-brand-rose-light: #FEE2E2;
+  --color-brand-blue: #2563EB;
+  --color-brand-blue-light: #EFF6FF;
+  --color-brand-green: #10B981;
+  --color-brand-green-light: #ECFDF5;
+
+  /* Typography Stacks: Clean Editorial Serif + Modern Neo-Grotesque Sans */
+  --font-editorial: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Font Scale with fluid clamp() for ultimate mobile-first responsiveness */
+  --text-xs: clamp(0.72rem, 0.7rem + 0.15vw, 0.8rem);
+  --text-sm: clamp(0.82rem, 0.8rem + 0.2vw, 0.92rem);
+  --text-base: clamp(0.95rem, 0.92rem + 0.25vw, 1.05rem);
+  --text-lg: clamp(1.1rem, 1.05rem + 0.35vw, 1.25rem);
+  --text-xl: clamp(1.3rem, 1.2rem + 0.6vw, 1.6rem);
+  --text-2xl: clamp(1.65rem, 1.45rem + 1.1vw, 2.1rem);
+  --text-3xl: clamp(2.1rem, 1.8rem + 1.8vw, 2.85rem);
+  --text-display: clamp(2.5rem, 2.1rem + 2.5vw, 3.6rem);
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+
+  /* Shadows (Tuned from Corelystic & Convertex UI) */
+  --shadow-xs: 0 1px 2px rgba(18, 22, 26, 0.04);
+  --shadow-sm: 0 2px 5px rgba(18, 22, 26, 0.05), 0 1px 2px rgba(18, 22, 26, 0.03);
+  --shadow-md: 0 8px 20px -3px rgba(18, 22, 26, 0.06), 0 3px 6px -1px rgba(18, 22, 26, 0.04);
+  --shadow-lg: 0 16px 32px -4px rgba(18, 22, 26, 0.08), 0 6px 12px -2px rgba(18, 22, 26, 0.04);
+  --shadow-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Animation Easings */
+  --transition-fast: 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 260ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 420ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Content Widths */
+  --max-width-editorial: 740px;
+  --max-width-container: 1240px;
+  --max-width-wide: 1400px;
+}
+
+/* Dark Mode Monochrome Theme Overrides */
+[data-theme="dark"] {
+  --color-paper-base: #090C10;
+  --color-paper-subtle: #12161E;
+  --color-surface: #161B24;
+  --color-surface-hover: #1D232E;
+  --color-surface-elevated: #202735;
+  
+  --color-ink-primary: #F8F9FA;
+  --color-ink-secondary: #D0D5DD;
+  --color-ink-muted: #98A2B3;
+  --color-ink-faint: #344054;
+  
+  --color-border-subtle: rgba(255, 255, 255, 0.08);
+  --color-border-medium: rgba(255, 255, 255, 0.14);
+  --color-border-accent: rgba(255, 255, 255, 0.25);
+  
+  --color-brand-navy: #F8F9FA;
+  --color-brand-teal: #F8F9FA;
+  --color-brand-teal-light: rgba(255, 255, 255, 0.08);
+  --color-brand-teal-dark: #FFFFFF;
+  --color-brand-amber: #CBD5E1;
+  --color-brand-amber-light: rgba(255, 255, 255, 0.06);
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 8px 20px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.55);
+  --shadow-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}

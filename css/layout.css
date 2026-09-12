@@ -1,0 +1,481 @@
+/* ==========================================================================
+   GROWWISE RESEARCH - LAYOUT & RESPONSIVE GRID
+   Mobile-First Editorial Architecture
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--color-paper-base);
+  color: var(--color-ink-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.65;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+/* Reading Progress Indicator */
+.reading-progress-track {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: transparent;
+  z-index: 1000;
+}
+
+.reading-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--color-ink-primary);
+  transition: width 0.1s ease-out;
+}
+
+/* Top Masthead Bar: Logo on Top Left, Actions on Top Right (In line) */
+.top-nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 950;
+  width: 100%;
+  background: rgba(250, 249, 246, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border-subtle);
+  transition: background-color var(--transition-normal), border-color var(--transition-normal);
+}
+
+[data-theme="dark"] .top-nav-bar {
+  background: rgba(9, 12, 16, 0.94);
+  border-color: var(--color-border-subtle);
+}
+
+.top-nav-inner {
+  max-width: var(--max-width-container);
+  margin: 0 auto;
+  padding: 0.85rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.nav-logo-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.nav-logo-wrap .brand-logo-img {
+  height: 34px;
+  width: auto;
+  object-fit: contain;
+}
+
+.nav-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Minimalist Audio Control Bar */
+.audio-player-panel {
+  display: none;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-medium);
+  border-radius: var(--radius-full);
+  padding: 0.2rem 0.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.audio-player-panel.active {
+  display: inline-flex;
+}
+
+.btn-audio-ctrl {
+  background: transparent;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--color-ink-primary);
+  padding: 0.25rem 0.55rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-audio-ctrl:hover {
+  background: var(--color-paper-subtle);
+}
+
+.btn-audio-speed {
+  border-left: 1px solid var(--color-border-medium);
+  padding-left: 0.5rem;
+  margin-left: 0.15rem;
+}
+
+.nav-pill-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Main Container System */
+.page-wrapper {
+  padding-top: var(--space-4);
+  padding-bottom: var(--space-20);
+}
+
+.container {
+  width: 100%;
+  max-width: var(--max-width-container);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+.container-editorial {
+  width: 100%;
+  max-width: var(--max-width-editorial);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+.container-wide {
+  width: 100%;
+  max-width: var(--max-width-wide);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+/* Article Hero & Editorial Masthead */
+.article-masthead {
+  padding: var(--space-6) 0 var(--space-6);
+  border-bottom: 1px solid var(--color-border-subtle);
+  position: relative;
+}
+
+.brand-logo-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--space-5);
+}
+
+.brand-logo-img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+.logo-light-mode {
+  display: block !important;
+}
+
+.logo-dark-mode {
+  display: none !important;
+}
+
+[data-theme="dark"] .logo-light-mode {
+  display: none !important;
+}
+
+[data-theme="dark"] .logo-dark-mode {
+  display: block !important;
+}
+
+.masthead-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: var(--space-4);
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+  font-family: var(--font-sans);
+  letter-spacing: 0.01em;
+}
+
+.article-title {
+  font-family: var(--font-editorial);
+  font-size: var(--text-display);
+  line-height: 1.12;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: var(--color-ink-primary);
+  margin-bottom: var(--space-4);
+}
+
+.article-deck {
+  font-size: var(--text-lg);
+  line-height: 1.5;
+  color: var(--color-ink-secondary);
+  font-weight: 400;
+  max-width: 90%;
+  margin-bottom: var(--space-6);
+}
+
+.author-block {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-top: var(--space-4);
+  border-top: 1px dashed var(--color-border-medium);
+}
+
+.author-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.author-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: var(--color-paper-subtle);
+  border: 1px solid var(--color-border-medium);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-ink-primary);
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.author-details-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--color-ink-primary);
+}
+
+.author-details-role {
+  font-size: 0.75rem;
+  color: var(--color-ink-muted);
+}
+
+/* Executive Summary Box - Clean Editorial Callout */
+.executive-summary-banner {
+  margin: var(--space-8) auto;
+  padding: var(--space-6);
+  background: var(--color-surface);
+  border-left: 3px solid var(--color-ink-primary);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.executive-summary-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-ink-muted);
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+}
+
+[data-theme="dark"] .executive-summary-label {
+  color: var(--color-ink-muted);
+}
+
+.executive-summary-quote {
+  font-family: var(--font-editorial);
+  font-size: var(--text-xl);
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--color-ink-primary);
+  margin-bottom: var(--space-3);
+}
+
+.executive-summary-bullets {
+  list-style: none;
+  display: grid;
+  gap: 0.5rem;
+  font-size: var(--text-sm);
+  color: var(--color-ink-secondary);
+}
+
+.executive-summary-bullets li {
+  position: relative;
+  padding-left: 1.4rem;
+}
+
+.executive-summary-bullets li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--color-ink-muted);
+  font-weight: 700;
+}
+
+/* KPI At-a-Glance Cards Grid (Inspired by Corelystic & Convertex) */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin: var(--space-8) 0;
+}
+
+@media (min-width: 600px) {
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .kpi-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Editorial Story Flow */
+.editorial-act {
+  margin: var(--space-10) 0;
+  position: relative;
+}
+
+.act-marker {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-2);
+}
+
+.act-heading {
+  font-family: var(--font-editorial);
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--color-ink-primary);
+  margin-bottom: var(--space-4);
+  line-height: 1.25;
+}
+
+.act-body p {
+  margin-bottom: var(--space-4);
+  font-size: var(--text-base);
+  line-height: 1.75;
+  color: var(--color-ink-primary);
+}
+
+.act-body p:first-of-type::first-letter {
+  font-family: var(--font-editorial);
+  font-size: 3.2rem;
+  float: left;
+  line-height: 0.82;
+  margin-right: 0.65rem;
+  margin-top: 0.2rem;
+  color: var(--color-ink-primary);
+  font-weight: 700;
+}
+
+/* Interactive Data Lab Section */
+.data-lab-section {
+  margin: var(--space-12) 0;
+  padding: var(--space-8) 0;
+  background: var(--color-paper-subtle);
+  border-top: 1px solid var(--color-border-subtle);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.section-header-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: var(--space-6);
+}
+
+@media (min-width: 768px) {
+  .section-header-row {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+}
+
+.section-title {
+  font-family: var(--font-editorial);
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  color: var(--color-ink-primary);
+}
+
+.section-subtitle {
+  font-size: var(--text-sm);
+  color: var(--color-ink-secondary);
+}
+
+/* Interactive CAC Margin Simulator Box */
+.simulator-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: var(--space-8);
+}
+
+@media (min-width: 900px) {
+  .simulator-layout {
+    grid-template-columns: 1fr 1.15fr;
+  }
+}
+
+/* Strategic Imperatives Action Matrix (McKinsey Style) */
+.action-matrix-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  margin-top: var(--space-6);
+}
+
+@media (min-width: 768px) {
+  .action-matrix-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Publication Footer */
+.site-footer {
+  margin-top: var(--space-16);
+  padding: var(--space-10) 0;
+  border-top: 2px solid var(--color-border-medium);
+  background: var(--color-surface);
+  font-size: var(--text-sm);
+  color: var(--color-ink-secondary);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+}
