@@ -502,74 +502,72 @@ window.ChartEngine = {
   },
 
   /**
-   * EXHIBIT 3: Acquisition Funnel Architecture — Dual Funnel SVG + CAC Bar Chart
+   * EXHIBIT 3: Acquisition Funnel Architecture — 3-Column Layout
+   * Labels flanking an SVG-only dual funnel (no text inside shapes)
+   * Each row has hover highlight across both the label card and SVG segment.
    */
   renderFunnelFlowChart(container) {
     if (!container) return;
 
-    // Funnel stages data
+    const STAGE_H = 82; // px — must match CSS .flb-box height
+
     const tradStages = [
-      { label: 'Auction Click', sub: '$65+ CPC', pct: 100, note: '1,000 Clicks · $65,000 Spend' },
-      { label: 'Form Start', sub: 'Static 20+ Field', pct: 38, note: '380 reach the form' },
-      { label: 'Form Completion', sub: '4.2% CVR', pct: 4.2, note: '42 complete quote' },
-      { label: 'Quote-to-Close', sub: '18–24 Days', pct: 2.1, note: '~21 policyholders acquired' },
+      { label: 'Auction Click',     sub: '$65+ CPC',           note: '1,000 Clicks · $65K Spend',      color: '#334155' },
+      { label: 'Form Start',        sub: 'Static 20+ Field',   note: '380 reach the form gateway',     color: '#3B5068' },
+      { label: 'Form Completion',   sub: '4.2% CVR',           note: '42 complete — 95.8% abandon',    color: '#475569' },
+      { label: 'Quote-to-Close',    sub: '18–24 Days',         note: '~21 policyholders · $215 CAC',   color: '#1E293B' },
     ];
     const aiStages = [
-      { label: 'Intent Inquiry', sub: 'Contextual Query', pct: 100, note: 'Natural language discovery' },
-      { label: 'AI Q&A Engage', sub: 'Zero Friction', pct: 78, note: '780 engage through dialogue' },
-      { label: 'Intent Qualified', sub: '+42% Retain', pct: 52, note: '520 pre-qualified leads' },
-      { label: 'Quote-to-Close', sub: '9–11 Days', pct: 38, note: '~380 policyholders acquired' },
+      { label: 'Intent Inquiry',    sub: 'Contextual Query',   note: 'Natural language discovery',     color: '#0F766E' },
+      { label: 'AI Q&A Engage',     sub: 'Zero Friction',      note: '780 engage — 42% less drop-off', color: '#0D9488' },
+      { label: 'Intent Qualified',  sub: '+42% Retain',        note: '520 pre-qualified leads',        color: '#0A8878' },
+      { label: 'Quote-to-Close',    sub: '9–11 Days',          note: '~380 policyholders · $64 CAC',   color: '#0A7A74' },
     ];
 
-    const svgW = 600, svgH = 240;
-    const funnelTop = 160;
-    const funnelBottom = 28;
-    const stageH = (svgH - 20) / tradStages.length;
-    const gap = 20; // gap between left and right funnels
+    // Minimum 18% width so even tiny stages stay visible in the shape
+    const tradPcts = [100, 38, 18, 12];
+    const aiPcts   = [100, 78, 52, 38];
 
-    const buildFunnelPath = (stages, startX, maxW) => {
-      let paths = '';
-      const segColors_trad = ['#334155', '#3D4E63', '#475569', '#2D3748'];
-      const segColors_ai   = ['#0F766E', '#0D9488', '#0B8880', '#0A7A74'];
+    const svgH  = STAGE_H * 4;   // 328
+    const halfW = 160;
+    const gapPx = 10;
+    const svgW  = halfW * 2 + gapPx;
 
-      stages.forEach((s, i) => {
-        const topW = (stages[i].pct / 100) * maxW;
-        const botW = i < stages.length - 1
-          ? (stages[i + 1].pct / 100) * maxW
-          : (stages[i].pct / 100) * maxW * 0.65;
-        const y1 = 10 + i * stageH;
-        const y2 = y1 + stageH - 3;
-        const cx = startX + maxW / 2;
-        const tlx = cx - topW / 2;
-        const trx = cx + topW / 2;
-        const blx = cx - botW / 2;
-        const brx = cx + botW / 2;
-        const isAI = startX > svgW / 2;
-        const fill = isAI ? segColors_ai[i] : segColors_trad[i];
-        paths += `<path d="M${tlx},${y1} L${trx},${y1} L${brx},${y2} L${blx},${y2} Z" fill="${fill}" opacity="0.88"/>`;
-      });
-      return paths;
-    };
+    // Build SVG path groups — no text inside
+    const buildPaths = (pcts, startX, colors, side) =>
+      pcts.map((pct, i) => {
+        const botPct = i < pcts.length - 1 ? pcts[i + 1] : Math.max(pcts[i] * 0.65, 8);
+        const topW = (pct / 100) * halfW;
+        const botW = (botPct / 100) * halfW;
+        const cx   = startX + halfW / 2;
+        const y1   = i * STAGE_H;
+        const y2   = (i + 1) * STAGE_H;
+        const tlx  = (cx - topW / 2).toFixed(1);
+        const trx  = (cx + topW / 2).toFixed(1);
+        const blx  = (cx - botW / 2).toFixed(1);
+        const brx  = (cx + botW / 2).toFixed(1);
+        return `
+          <g class="fsg" data-side="${side}" data-idx="${i}" style="cursor:default;">
+            <rect x="${startX}" y="${y1}" width="${halfW}" height="${STAGE_H}" fill="transparent"/>
+            <path class="fsg-path"
+              d="M${tlx},${y1} L${trx},${y1} L${brx},${y2} L${blx},${y2} Z"
+              fill="${colors[i]}"/>
+          </g>`;
+      }).join('');
 
-    const buildLabels = (stages, startX, maxW, side = 'trad') => {
-      let html = '';
-      stages.forEach((s, i) => {
-        const y = 10 + i * stageH + stageH / 2;
-        const cx = startX + maxW / 2;
-        html += `
-          <text x="${cx}" y="${y - 5}" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle" font-family="var(--font-sans)">${s.label}</text>
-          <text x="${cx}" y="${y + 9}" font-size="9.5" fill="rgba(255,255,255,0.75)" text-anchor="middle" font-family="var(--font-sans)">${s.sub}</text>
-        `;
-      });
-      return html;
-    };
+    const tradStartX = 0;
+    const aiStartX   = halfW + gapPx;
 
-    const tradMaxW = (svgW / 2) - gap - 10;
-    const aiMaxW  = (svgW / 2) - gap - 10;
-    const tradStartX = 8;
-    const aiStartX   = svgW / 2 + gap / 2;
+    // Label columns (pure HTML — no SVG text)
+    const labelBoxes = (stages, side) =>
+      stages.map((s, i) => `
+        <div class="flb-box flb-${side}" data-idx="${i}">
+          <div class="flb-name">${s.label}</div>
+          <div class="flb-sub">${s.sub}</div>
+          <div class="flb-note">${s.note}</div>
+        </div>`).join('');
 
-    // CAC bar comparison
+    // CAC comparison bar
     const cacBarHtml = `
       <div class="funnel-cac-comparison">
         <div class="funnel-cac-row">
@@ -588,35 +586,30 @@ window.ChartEngine = {
         </div>
         <div class="funnel-cac-row">
           <div class="funnel-cac-label">Reduction</div>
-          <div class="funnel-cac-bar-wrap" style="align-items:center;display:flex;">
-            <span style="font-size:0.78rem;font-weight:700;color:#0D9488;padding-left:4px;">&#8209;70.2% acquisition cost savings</span>
+          <div class="funnel-cac-bar-wrap" style="display:flex;align-items:center;">
+            <span style="font-size:0.78rem;font-weight:700;color:#0D9488;padding-left:4px;">&#8209;70.2% acquisition cost savings vs. traditional search</span>
           </div>
           <div class="funnel-cac-val" style="color:#0D9488;">−70.2%</div>
         </div>
-      </div>
-    `;
+      </div>`;
 
-    // Stage annotation table
+    // Annotation table
     const stageTableHtml = `
       <div class="funnel-stage-table">
         <div class="funnel-stage-header">
-          <span>Stage</span>
-          <span>Traditional Search</span>
-          <span>Conversational AI</span>
+          <span>Stage</span><span>Traditional Search</span><span>Conversational AI</span>
         </div>
         ${tradStages.map((t, i) => `
           <div class="funnel-stage-row">
             <span>${t.label}</span>
             <span>${t.note}</span>
             <span>${aiStages[i].note}</span>
-          </div>
-        `).join('')}
-      </div>
-    `;
+          </div>`).join('')}
+      </div>`;
 
     container.innerHTML = `
       <div class="funnel-visual-wrap">
-        <!-- Column Headers -->
+        <!-- Column headers -->
         <div class="funnel-col-headers">
           <div class="funnel-col-head trad-head">
             <span class="funnel-head-title">Traditional Search Funnel</span>
@@ -628,29 +621,86 @@ window.ChartEngine = {
           </div>
         </div>
 
-        <!-- SVG Dual Funnel -->
-        <div class="funnel-svg-wrap">
-          <svg viewBox="0 0 ${svgW} ${svgH}" class="funnel-svg" preserveAspectRatio="xMidYMid meet">
-            <!-- Traditional funnel (left) -->
-            ${buildFunnelPath(tradStages, tradStartX, tradMaxW)}
-            ${buildLabels(tradStages, tradStartX, tradMaxW, 'trad')}
+        <!-- 3-column: trad labels | SVG | ai labels -->
+        <div class="funnel-triple-grid">
+          <div class="funnel-lbl-col funnel-lbl-trad" id="funnel-lbl-trad">
+            ${labelBoxes(tradStages, 'trad')}
+          </div>
 
-            <!-- AI funnel (right) -->
-            ${buildFunnelPath(aiStages, aiStartX, aiMaxW)}
-            ${buildLabels(aiStages, aiStartX, aiMaxW, 'ai')}
+          <div class="funnel-svg-col">
+            <svg viewBox="0 0 ${svgW} ${svgH}" id="funnel-svg-main"
+                 style="display:block;width:100%;height:${svgH}px;">
+              ${buildPaths(tradPcts, tradStartX, tradStages.map(s=>s.color), 'trad')}
+              ${buildPaths(aiPcts,   aiStartX,   aiStages.map(s=>s.color),  'ai')}
+              <line x1="${halfW + gapPx/2}" y1="0" x2="${halfW + gapPx/2}" y2="${svgH}"
+                    stroke="rgba(148,163,184,0.25)" stroke-width="1" stroke-dasharray="4,3"/>
+            </svg>
+          </div>
 
-            <!-- Center divider line -->
-            <line x1="${svgW/2}" y1="4" x2="${svgW/2}" y2="${svgH - 4}" stroke="var(--color-border-subtle)" stroke-width="1" stroke-dasharray="4,4"/>
-          </svg>
+          <div class="funnel-lbl-col funnel-lbl-ai" id="funnel-lbl-ai">
+            ${labelBoxes(aiStages, 'ai')}
+          </div>
         </div>
 
-        <!-- CAC Comparison Bar Chart -->
         ${cacBarHtml}
-
-        <!-- Stage-by-Stage Annotation Table -->
         ${stageTableHtml}
-      </div>
-    `;
+      </div>`;
+
+    // ── Hover interactions ──────────────────────────────────────────────────
+    const svgEl     = container.querySelector('#funnel-svg-main');
+    const segs      = container.querySelectorAll('.fsg');
+    const tradBoxes = container.querySelectorAll('.flb-trad');
+    const aiBoxes   = container.querySelectorAll('.flb-ai');
+
+    const setHighlight = (idx, side, on) => {
+      // SVG segments
+      segs.forEach(g => {
+        const match = g.dataset.idx == idx && g.dataset.side === side;
+        const path  = g.querySelector('.fsg-path');
+        if (!path) return;
+        if (on) {
+          path.style.filter    = match ? 'brightness(1.3) saturate(1.2)' : 'brightness(0.55)';
+          path.style.transform = match ? 'scaleX(1.06)' : 'scaleX(1)';
+        } else {
+          path.style.filter    = 'none';
+          path.style.transform = 'scaleX(1)';
+        }
+      });
+
+      // Label boxes — this side only
+      const boxes = side === 'trad' ? tradBoxes : aiBoxes;
+      boxes.forEach((b, bi) => {
+        if (on) {
+          b.style.transform  = bi == idx ? 'scale(1.04)' : 'scale(0.97)';
+          b.style.opacity    = bi == idx ? '1'           : '0.55';
+          b.style.background = bi == idx
+            ? (side === 'trad' ? 'rgba(51,65,85,0.09)' : 'rgba(13,148,136,0.09)')
+            : '';
+        } else {
+          b.style.transform  = 'scale(1)';
+          b.style.opacity    = '1';
+          b.style.background = '';
+        }
+      });
+    };
+
+    // Bind to SVG segment groups
+    segs.forEach(g => {
+      const idx  = parseInt(g.dataset.idx);
+      const side = g.dataset.side;
+      g.addEventListener('mouseenter', () => setHighlight(idx, side, true));
+      g.addEventListener('mouseleave', () => setHighlight(idx, side, false));
+    });
+
+    // Bind to label boxes too
+    tradBoxes.forEach((b, idx) => {
+      b.addEventListener('mouseenter', () => setHighlight(idx, 'trad', true));
+      b.addEventListener('mouseleave', () => setHighlight(idx, 'trad', false));
+    });
+    aiBoxes.forEach((b, idx) => {
+      b.addEventListener('mouseenter', () => setHighlight(idx, 'ai', true));
+      b.addEventListener('mouseleave', () => setHighlight(idx, 'ai', false));
+    });
   },
 
 

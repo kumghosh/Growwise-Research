@@ -1477,3 +1477,125 @@ a.bento-card:hover .bento-read-link {
     font-size: 0.72rem;
   }
 }
+
+/* ============================================================
+   EXHIBIT 3: 3-Column Funnel — Triple Grid & Label Boxes
+   ============================================================ */
+
+/* Outer 3-column layout: trad-labels | SVG | ai-labels */
+.funnel-triple-grid {
+  display: grid;
+  grid-template-columns: 1fr 180px 1fr;
+  gap: 0;
+  background: var(--color-paper-subtle);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+/* SVG center column */
+.funnel-svg-col {
+  background: var(--color-paper-base);
+  border-left: 1px solid var(--color-border-subtle);
+  border-right: 1px solid var(--color-border-subtle);
+  flex-shrink: 0;
+}
+
+/* Label column (shared) */
+.funnel-lbl-col {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Individual label box */
+.flb-box {
+  height: 82px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 0.9rem;
+  border-bottom: 1px solid var(--color-border-subtle);
+  transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+  transform-origin: center;
+  cursor: default;
+}
+
+.flb-box:last-child {
+  border-bottom: none;
+}
+
+/* Traditional side — right-aligned, right border accent */
+.flb-trad {
+  text-align: right;
+  border-right: 2.5px solid #334155;
+}
+
+/* AI side — left-aligned, left border accent */
+.flb-ai {
+  text-align: left;
+  border-left: 2.5px solid #0D9488;
+}
+
+/* Label text hierarchy */
+.flb-name {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-ink-primary);
+  font-family: var(--font-sans);
+  line-height: 1.3;
+}
+
+.flb-sub {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-ink-secondary);
+  font-family: var(--font-sans);
+  margin-top: 0.15rem;
+  line-height: 1.25;
+}
+
+.flb-note {
+  font-size: 0.65rem;
+  color: var(--color-ink-muted);
+  font-family: var(--font-sans);
+  margin-top: 0.2rem;
+  line-height: 1.3;
+}
+
+/* SVG paths — smooth hover transitions */
+.fsg-path {
+  transition: filter 0.2s ease, transform 0.2s ease;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* Responsive: collapse to single column on small screens */
+@media (max-width: 680px) {
+  .funnel-triple-grid {
+    grid-template-columns: 1fr;
+  }
+  .funnel-svg-col {
+    order: -1;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+  .funnel-lbl-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .flb-box {
+    height: auto;
+    min-height: 64px;
+    padding: 0.6rem 0.75rem;
+    border-right: none;
+    border-left: none;
+    text-align: left;
+  }
+  .flb-trad {
+    border-bottom: 2px solid #334155;
+  }
+  .flb-ai {
+    border-bottom: 2px solid #0D9488;
+  }
+}
