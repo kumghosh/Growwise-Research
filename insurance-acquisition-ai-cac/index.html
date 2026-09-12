@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Growwise Research — The Customer Acquisition Squeeze (2015–2026)</title>
+  <meta name="description" content="A McKinsey-grade longitudinal analysis of Google Ads auction inflation, Performance Max algorithmic bidding, and the structural erosion of digital unit economics from 2015 to 2026.">
+  <meta name="author" content="Growwise Research">
+
+  <base href="/">
+
+  <!-- Typography: Editorial Serif + Modern Neo-Grotesque Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheets (Cache-busted) -->
+  <link rel="stylesheet" href="css/design-tokens.css?v=2">
+  <link rel="stylesheet" href="css/layout.css?v=2">
+  <link rel="stylesheet" href="css/components.css?v=2">
+  <link rel="stylesheet" href="css/animations.css?v=2">
+</head>
+<body>
+
+  <!-- Dedicated PDF Print Watermark using assets/logo-black.png -->
+  <div class="print-watermark" aria-hidden="true">
+    <img src="assets/logo-black.png" alt="" class="print-watermark-img" />
+  </div>
+
+  <!-- Top Reading Progress Indicator -->
+  <div class="reading-progress-track">
+    <div class="reading-progress-bar" id="reading-progress"></div>
+  </div>
+
+  <!-- Top Bar: Logo on Top-Left aligned with Reading Utilities & Audio on Top-Right -->
+  <header class="top-nav-bar" id="main-nav-bar">
+    <div class="top-nav-inner">
+      <div class="nav-logo-wrap">
+        <a href="/">
+          <img src="assets/logo-black.png" alt="Growwise Research" class="brand-logo-img logo-light-mode" />
+          <img src="assets/logo-white.png" alt="Growwise Research" class="brand-logo-img logo-dark-mode" />
+        </a>
+      </div>
+      <div class="nav-actions-group">
+        <!-- Minimal Audio Control Bar -->
+        <div class="audio-player-panel" id="audio-player-panel" aria-label="Audio controls">
+          <button class="btn-audio-ctrl" id="audio-rewind-btn" title="Rewind 10 seconds">-10s</button>
+          <button class="btn-audio-ctrl" id="audio-play-pause-btn" title="Pause audio">Pause</button>
+          <button class="btn-audio-ctrl" id="audio-forward-btn" title="Forward 10 seconds">+10s</button>
+          <button class="btn-audio-ctrl btn-audio-speed" id="audio-speed-btn" title="Playback speed">1.0x</button>
+          <button class="btn-audio-ctrl" id="audio-stop-btn" title="Stop audio">✕</button>
+        </div>
+        <div class="nav-pill-actions">
+          <button class="btn btn-subtle" id="audio-briefing-btn" title="Listen to citation">Listen</button>
+          <button class="btn btn-subtle" id="print-export-btn" title="Print document or save PDF">Print</button>
+          <button class="btn btn-subtle" id="theme-toggle-btn" title="Toggle night mode">Night</button>
+          <a href="https://growwisemedia.com" target="_blank" rel="noopener noreferrer" class="btn btn-subtle" id="visit-growwise-btn" title="Visit Growwise Media">Visit Growwise</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Main Content Flow -->
+  <main class="page-wrapper">
+
+    <!-- Hero / Article Masthead Container -->
+    <article class="article-masthead">
+      <div class="container-editorial" id="article-masthead-container">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </article>
+
+    <!-- At-a-Glance KPI Grid (Corelystic / Convertex inspired) -->
+    <section class="container" aria-label="Executive Key Performance Indicators">
+      <div class="kpi-grid" id="kpi-grid-container">
+        <!-- Rendered dynamically by app.js with live sparklines -->
+      </div>
+    </section>
+
+    <!-- Executive Summary Pull-Box -->
+    <section class="container-editorial" id="exec-summary-container">
+      <!-- Rendered dynamically by app.js -->
+    </section>
+
+    <!-- Narrative Flow: Acts I & II (First 250 Words) -->
+    <section class="container-editorial" id="narrative-container">
+      <!-- Rendered dynamically by app.js with scroll popups -->
+    </section>
+
+    <!-- Interactive Data Lab (Longitudinal Timeline Chart + Channel Matrix) -->
+    <section class="data-lab-section" id="data-lab">
+      <div class="container">
+        <div class="section-header-row">
+          <div>
+            <h2 class="section-title">The Search CAC Trajectory (2015–2026)</h2>
+            <p class="section-subtitle">Longitudinal analysis across 12 auction cycles with macro milestones & black-box algorithmic shifts.</p>
+          </div>
+          <div class="chart-tabs">
+            <button class="chart-tab-btn active" data-metric="cac">Blended CAC</button>
+            <button class="chart-tab-btn" data-metric="cpc">Search CPC</button>
+            <button class="chart-tab-btn" data-metric="roas">ROAS Yield</button>
+          </div>
+        </div>
+
+        <!-- Flagship Interactive SVG Chart Card -->
+        <div class="chart-card reveal-item">
+          <div class="chart-top-bar">
+            <div class="chart-title-group">
+              <span class="chart-title">Longitudinal Curve & Inflation Crosshairs</span>
+              <span class="chart-caption">Hover or touch curve to inspect historical auction catalysts & year-by-year benchmarks.</span>
+            </div>
+            <div>
+              <span style="font-size:var(--text-xs);color:var(--color-ink-muted);font-weight:600;">Interactive Canvas</span>
+            </div>
+          </div>
+
+          <!-- Chart SVG & Hover Tooltip -->
+          <div class="chart-svg-container" id="timeline-chart-svg-wrap">
+            <!-- Rendered by ChartEngine.renderTimelineChart -->
+          </div>
+
+          <!-- Interactive Timeline Scrubber Control -->
+          <div class="timeline-scrubber-box">
+            <div class="scrubber-header">
+              <span>Timeline Scrubber: <strong>2015</strong> to <strong>2026</strong></span>
+              <span>Scrubbed Year: <strong id="scrubber-year-label" style="color:var(--color-brand-teal);font-size:0.95rem;">2026</strong></span>
+            </div>
+            <input type="range" id="timeline-slider" class="scrubber-slider" min="0" max="11" value="11" step="1" aria-label="Year Scrubber">
+            <div class="scrubber-milestone-callout" id="scrubber-milestone-text">
+              <strong>2026 Milestone:</strong> Autonomous Agent Ad Bidding & Cookieless Search Dominance
+            </div>
+          </div>
+        </div>
+
+        <!-- Channel Comparative Matrix (Search vs Meta vs TikTok vs PMax vs SEO) -->
+        <div style="margin-top:2rem;" class="reveal-item delay-2">
+          <div class="channels-matrix-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+              <div>
+                <h3 style="font-size:1.1rem;font-weight:700;">Cross-Channel Acquisition Matrix</h3>
+                <p style="font-size:var(--text-xs);color:var(--color-ink-muted);">Efficiency Index vs. 2018 baseline benchmark</p>
+              </div>
+              <span class="pill pill-gray">2026 Cost Index</span>
+            </div>
+            <div id="channel-matrix-container">
+              <!-- Rendered by ChartEngine.renderChannelComparison -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive CAC Margin Stress-Tester Simulator -->
+    <section class="container" style="margin-top:var(--space-12);" id="simulator-section">
+      <div class="container-editorial" style="margin-bottom:1.5rem;text-align:center;">
+        <h2 style="font-family:var(--font-editorial);font-size:var(--text-3xl);font-weight:600;margin-top:0.4rem;">
+          CAC Margin Stress-Tester
+        </h2>
+        <p style="font-size:var(--text-sm);color:var(--color-ink-secondary);margin-top:0.4rem;">
+          Model the financial impact of search ad inflation on your specific business model and gross margins.
+        </p>
+      </div>
+
+      <div class="simulator-layout">
+        <!-- Input Controls -->
+        <div class="sim-controls-panel reveal-item">
+          <div class="sim-field">
+            <div class="sim-label-row">
+              <label for="sim-industry">Business Model & Sector</label>
+            </div>
+            <select id="sim-industry" class="sim-input-select">
+              <option value="ecommerce" selected>D2C & Consumer Goods (65% Gross Margin)</option>
+              <option value="saas">B2B SaaS / Software (80% Gross Margin)</option>
+              <option value="fintech">FinTech & Neobanking (70% Gross Margin)</option>
+              <option value="services">Professional & Local Services (55% Gross Margin)</option>
+            </select>
+          </div>
+
+          <div class="sim-field">
+            <div class="sim-label-row">
+              <label for="sim-cust-val">Customer Order Value / ACV</label>
+              <span id="sim-cust-val-display" style="font-family:var(--font-sans);font-weight:700;">$280</span>
+            </div>
+            <input type="range" id="sim-cust-val" class="scrubber-slider" min="50" max="1500" step="10" value="280">
+          </div>
+
+          <div class="sim-field">
+            <div class="sim-label-row">
+              <label for="sim-year">Ad Auction Benchmark Year</label>
+              <span id="sim-year-display" style="font-family:var(--font-sans);font-weight:700;">2026</span>
+            </div>
+            <input type="range" id="sim-year" class="scrubber-slider" min="2015" max="2026" step="1" value="2026">
+          </div>
+
+          <div class="sim-field">
+            <div class="sim-label-row">
+              <label for="sim-cvr">Paid Conversion Rate (CVR)</label>
+              <span id="sim-cvr-display" style="font-family:var(--font-sans);font-weight:700;">3.2%</span>
+            </div>
+            <input type="range" id="sim-cvr" class="scrubber-slider" min="0.5" max="6.0" step="0.1" value="3.2">
+          </div>
+        </div>
+
+        <!-- Live Stress Test Results - Clean Executive Ledger -->
+        <div class="sim-results-panel reveal-item delay-1">
+          <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--color-border-subtle);padding-bottom:0.75rem;">
+            <span style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;font-weight:700;color:var(--color-ink-secondary);">Unit Economics Ledger</span>
+            <span id="sim-diagnosis-badge" class="pill" style="font-size:0.72rem;background:var(--color-paper-subtle);color:var(--color-ink-primary);border:1px solid var(--color-border-medium);">Capital Efficient</span>
+          </div>
+
+          <div class="sim-kpi-block">
+            <div>
+              <div class="sim-kpi-sub">Estimated Search CAC</div>
+              <div class="sim-kpi-val" id="sim-out-cac">$155.60</div>
+            </div>
+            <div>
+              <div class="sim-kpi-sub">CAC / Revenue Ratio</div>
+              <div class="sim-kpi-val" id="sim-out-ratio">55.6%</div>
+            </div>
+            <div>
+              <div class="sim-kpi-sub">Gross Profit per Unit</div>
+              <div class="sim-kpi-val" id="sim-out-profit">$182.00</div>
+            </div>
+            <div>
+              <div class="sim-kpi-sub">Net Margin Remaining</div>
+              <div class="sim-kpi-val" id="sim-out-margin">+9.4%</div>
+            </div>
+          </div>
+
+          <div class="sim-recommendation-box">
+            <div style="font-weight:700;margin-bottom:0.3rem;font-size:0.75rem;color:var(--color-ink-primary);">Strategic Advisory Note:</div>
+            <div id="sim-rec-text">Unit economics absorb search auction inflation with positive net contribution. Maintain focus on high-intent query harvesting and first-party customer retention.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Strategic Imperatives (McKinsey 3-Column Action Matrix) -->
+    <section class="container" style="margin-top:var(--space-16);">
+      <div class="container-editorial" style="text-align:center;margin-bottom:1.5rem;">
+        <span class="pill pill-teal">Action Matrix</span>
+        <h2 style="font-family:var(--font-editorial);font-size:var(--text-3xl);font-weight:600;margin-top:0.4rem;">
+          Strategic Imperatives for Executive Leadership
+        </h2>
+        <p style="font-size:var(--text-sm);color:var(--color-ink-secondary);">
+          Three operational protocols required to insulate unit economics against escalating ad inflation.
+        </p>
+      </div>
+
+      <div class="action-matrix-grid" id="imperatives-container">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- Methodology & Research Governance -->
+    <section class="container-editorial" style="margin-top:var(--space-16);border-top:1px solid var(--color-border-subtle);padding-top:var(--space-8);">
+      <h3 style="font-size:0.85rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-ink-muted);margin-bottom:0.75rem;">
+        Methodology & Quantitative Sources
+      </h3>
+      <p style="font-size:var(--text-xs);line-height:1.7;color:var(--color-ink-secondary);margin-bottom:0.75rem;">
+        Longitudinal data compiled from anonymized performance records across 420 mid-market and enterprise advertisers managing >$1.8B in cumulative annual Google Ads and Meta spend between Q1 2015 and Q2 2026. Data normalized for seasonal variance, currency fluctuations, and algorithmic attribution changes.
+      </p>
+      <div style="margin-top:1rem;">
+        <button class="btn btn-subtle" onclick="window.print();">Print Executive PDF Briefing</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Editorial Footer -->
+  <footer class="site-footer">
+    <div class="container footer-grid" style="grid-template-columns: 2fr 1fr;">
+      <div>
+        <div class="brand-wrapper" style="margin-bottom:0.75rem;">
+          <img src="assets/logo-black.png" alt="Growwise Research" class="brand-logo-img logo-light-mode" style="height:32px;width:auto;" />
+          <img src="assets/logo-white.png" alt="Growwise Research" class="brand-logo-img logo-dark-mode" style="height:32px;width:auto;" />
+        </div>
+        <p style="font-size:var(--text-xs);color:var(--color-ink-muted);line-height:1.6;max-width:440px;">
+          Independent macro analysis, commercial strategy, and empirical unit economics research for enterprise leaders and investors.
+        </p>
+        <div style="margin-top:1rem;font-size:var(--text-xs);color:var(--color-ink-muted);">
+          © Growwise Media | All rights reserved.
+        </div>
+      </div>
+
+      <div>
+        <h4 style="font-size:0.85rem;font-weight:700;margin-bottom:0.75rem;color:var(--color-ink-primary);">Research Areas</h4>
+        <ul style="list-style:none;display:grid;gap:0.4rem;font-size:var(--text-xs);">
+          <li><a href="#" style="color:var(--color-ink-secondary);text-decoration:none;">Performance Marketing & Ad Auctions</a></li>
+          <li><a href="#" style="color:var(--color-ink-secondary);text-decoration:none;">B2B SaaS Unit Economics & NRR</a></li>
+          <li><a href="#" style="color:var(--color-ink-secondary);text-decoration:none;">Generative Search & Zero-Click Impact</a></li>
+          <li><a href="#" style="color:var(--color-ink-secondary);text-decoration:none;">Private Equity Portfolio Growth</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Interactive Floating Toast -->
+  <div class="toast" id="toast-notification">Notification</div>
+
+  <!-- Scripts -->
+  <script src="js/data/authors.js?v=20260912-5"></script>
+  <script src="js/data/google-ads-cac.js?v=20260912-5"></script>
+  <script src="js/data/template-schema.js?v=20260912-5"></script>
+  <script src="js/charts.js?v=20260912-5"></script>
+  <script src="js/simulator.js?v=20260912-5"></script>
+  <script src="js/app.js?v=20260912-5"></script>
+</body>
+</html>

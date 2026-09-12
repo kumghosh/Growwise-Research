@@ -158,3 +158,8 @@ window.RESEARCH_DATABASE["b2b-saas-ltv-cac-2026"] = {
     }
   ]
 };
+
+// Register the new Insurance AI report if the data script is loaded
+if (window.INSURANCE_AI_DATA) {
+  window.RESEARCH_DATABASE["insurance-acquisition-ai-cac"] = window.INSURANCE_AI_DATA;
+}

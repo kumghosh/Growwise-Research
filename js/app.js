@@ -653,6 +653,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 150);
   });
 
-  // Initial Load
-  loadResearch('google-ads-cac-2015-2026');
+  // Initial Load dynamically based on path
+  const pathParts = window.location.pathname.split('/').filter(Boolean);
+  let researchIdToLoad = 'google-ads-cac-2015-2026'; // fallback
+  
+  if (pathParts.length > 0) {
+    const lastPart = pathParts[pathParts.length - 1];
+    if (window.RESEARCH_DATABASE && window.RESEARCH_DATABASE[lastPart]) {
+      researchIdToLoad = lastPart;
+    } else {
+      // In case they are using the old folder name which had dashes
+      if (lastPart.includes('google-ads-unit-economics')) {
+        researchIdToLoad = 'google-ads-cac-2015-2026';
+      }
+    }
+  }
+  loadResearch(researchIdToLoad);
 });
