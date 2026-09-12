@@ -32,6 +32,13 @@ window.SimulatorEngine = {
       cpcMultiplier: 1.9,
       baselineCvr: 3.5,
       grossMarginPct: 55
+    },
+    insurance: {
+      name: "Insurance & Policy Acquisition",
+      defaultAov: 850,
+      cpcMultiplier: 2.1,
+      baselineCvr: 2.4,
+      grossMarginPct: 75
     }
   },
 

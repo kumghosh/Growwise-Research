@@ -66,6 +66,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
     activeResearchId = researchId;
 
+    // Dynamically update document title and description meta
+    if (data.meta && data.meta.title) {
+      document.title = `Growwise Research — ${data.meta.title}`;
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc && data.meta.deck) {
+        metaDesc.setAttribute('content', data.meta.deck);
+      }
+    }
+
+    // Dynamic Section Header for Data Lab
+    const timelineTitle = document.querySelector('#data-lab .section-title');
+    const timelineSub = document.querySelector('#data-lab .section-subtitle');
+    if (timelineTitle && timelineSub) {
+      if (researchId === 'the-insurance-cac-crisis') {
+        timelineTitle.textContent = '10-Year Insurance Acquisition Cost Trajectory (2016–2026)';
+        timelineSub.textContent = 'Paid search and paid social longitudinal benchmark across carrier performance metrics.';
+      } else {
+        timelineTitle.textContent = 'The Search CAC Trajectory (2015–2026)';
+        timelineSub.textContent = 'Longitudinal analysis across 12 auction cycles with macro milestones & black-box algorithmic shifts.';
+      }
+    }
+
+    // Dynamic Simulator Defaults
+    if (simIndustry) {
+      if (researchId === 'the-insurance-cac-crisis') {
+        simIndustry.value = 'insurance';
+        if (simCustomerVal) simCustomerVal.value = 850;
+        if (simCustValDisplay) simCustValDisplay.textContent = '$850';
+        if (simCvr) simCvr.value = 2.4;
+        if (simCvrDisplay) simCvrDisplay.textContent = '2.4%';
+      }
+    }
+
     // Keep authors fixed and constant per report (never randomly changed on refresh)
     if (!data.meta.authors || !data.meta.authors.length) {
       data.meta.authors = window.getAssignedAuthorsForResearch 
@@ -82,8 +115,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Render Executive Summary
     renderExecutiveSummary(data.executiveSummary);
 
-    // 4. Render Narrative Acts
-    renderNarrative(data.narrative);
+    // 4. Render Narrative Acts + Bespoke Cohort & Funnel Visualizers
+    renderNarrative(data.narrative, data);
 
     // 5. Render Flagship Interactive Chart
     renderChart(data.timeline);
@@ -99,6 +132,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 9. Update Simulator with defaults
     updateSimulator();
+
+    // 10. Mount Budget Shift Simulator if present
+    const budgetMount = document.getElementById('budget-shift-mount');
+    if (budgetMount && window.ChartEngine.renderBudgetShiftSimulator && researchId === 'the-insurance-cac-crisis') {
+      window.ChartEngine.renderBudgetShiftSimulator(budgetMount);
+    }
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -138,16 +177,15 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="kpi-card reveal-item delay-${idx + 1}">
         <div class="kpi-header">
           <span class="kpi-title">${kpi.title}</span>
-          <div class="kpi-icon-badge pill-${kpi.badgeType}">
-            ${kpi.trend === 'up' ? '↗' : '↘'}
-          </div>
+          <span class="kpi-delta ${kpi.badgeType}">
+            ${kpi.trend === 'up' ? '▲' : '▼'} ${kpi.change}
+          </span>
         </div>
         <div class="kpi-value">${kpi.value}</div>
         <div class="kpi-footer">
-          <span class="pill pill-${kpi.badgeType}">${kpi.change}</span>
+          <div style="font-size:0.75rem;color:var(--color-ink-muted);">${kpi.note}</div>
           <div class="kpi-sparkline-canvas" id="sparkline-${kpi.id}"></div>
         </div>
-        <div style="font-size:0.72rem;color:var(--color-ink-muted);margin-top:0.4rem;">${kpi.note}</div>
       </div>
     `).join('');
 
@@ -181,22 +219,103 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
-  function renderNarrative(acts) {
+  function renderNarrative(acts, data = null) {
     if (!narrativeEl || !acts) return;
 
-    narrativeEl.innerHTML = acts.map((act, i) => `
-      <section class="editorial-act reveal-item delay-${(i % 3) + 1}">
-        <div class="act-marker">${act.act} — Macro Shift</div>
-        <h2 class="act-heading">${act.title}</h2>
-        <div class="act-body">
-          <p>${act.text}</p>
-        </div>
-      </section>
-    `).join('');
+    let narrativeHtml = '';
+
+    acts.forEach((act, i) => {
+      narrativeHtml += `
+        <section class="editorial-act reveal-item delay-${(i % 3) + 1}">
+          <div class="act-marker">${act.act}</div>
+          <h2 class="act-heading">${act.title}</h2>
+          <div class="act-body">
+            <p>${act.text}</p>
+          </div>
+        </section>
+      `;
+
+      // Exhibit 1: Demographic LTV & Retention Benchmark (after Act II)
+      if (i === 1 && data && data.id === 'the-insurance-cac-crisis') {
+        narrativeHtml += `
+          <div class="editorial-exhibit reveal-item">
+            <div class="exhibit-header">
+              <div class="exhibit-num">Exhibit 1</div>
+              <h3 class="exhibit-title">Demographic LTV & Policyholder Retention Benchmark</h3>
+              <p class="exhibit-subtitle">Empirical policyholder tenure, multi-policy bundling rates, and annual renewal retention across age cohorts.</p>
+            </div>
+            <div id="cohort-chart-mount"></div>
+            <div class="exhibit-footer">
+              <span>Source: Growwise Research Cross-Carrier Performance Database & Sprinklr Retention Telemetry</span>
+              <span>Interactive: Select metric tab or hover over bars for cohort intelligence</span>
+            </div>
+          </div>
+        `;
+      }
+
+      // Exhibit 2: Form Attrition & Device Disparity (after Act III)
+      if (i === 2 && data && data.id === 'the-insurance-cac-crisis') {
+        narrativeHtml += `
+          <div class="editorial-exhibit reveal-item">
+            <div class="exhibit-header">
+              <div class="exhibit-num">Exhibit 2</div>
+              <h3 class="exhibit-title">Form Attrition: Device Disparity & Portal Completion Collapse</h3>
+              <p class="exhibit-subtitle">Mobile quote conversion drop-off compared with longitudinal carrier portal completion rates from 2018 to 2026.</p>
+            </div>
+            <div id="attrition-chart-mount"></div>
+            <div class="exhibit-footer">
+              <span>Source: GoCardless 2026 Device Conversion Analysis & Carrier Portal Telemetry</span>
+              <span>Normalized across 420 mid-market & enterprise carrier domains</span>
+            </div>
+          </div>
+        `;
+      }
+
+      // Exhibit 3: Funnel Architecture & Sales Velocity (after Act IV)
+      if (i === 3 && data && data.id === 'the-insurance-cac-crisis') {
+        narrativeHtml += `
+          <div class="editorial-exhibit reveal-item">
+            <div class="exhibit-header">
+              <div class="exhibit-num">Exhibit 3</div>
+              <h3 class="exhibit-title">Acquisition Funnel Architecture: Traditional Search vs. Conversational AI</h3>
+              <p class="exhibit-subtitle">Comparative stage-by-stage friction analysis from initial intent discovery through quote-to-close underwriting velocity.</p>
+            </div>
+            <div id="funnel-chart-mount"></div>
+            <div class="exhibit-footer">
+              <span>Source: Growwise Research & McKinsey Carrier Advisory Telemetry</span>
+              <span>Modeled on $65 baseline search CPC vs LLM contextual inquiry units</span>
+            </div>
+          </div>
+        `;
+      }
+    });
+
+    narrativeEl.innerHTML = narrativeHtml;
+
+    // Mount Exhibit Charts immediately
+    if (data && data.id === 'the-insurance-cac-crisis') {
+      const cohortMount = document.getElementById('cohort-chart-mount');
+      if (cohortMount && window.ChartEngine.renderCohortBarChart) {
+        window.ChartEngine.renderCohortBarChart(cohortMount, 'tenure');
+      }
+      const attritionMount = document.getElementById('attrition-chart-mount');
+      if (attritionMount && window.ChartEngine.renderDeviceAndAttritionChart) {
+        window.ChartEngine.renderDeviceAndAttritionChart(attritionMount);
+      }
+      const funnelMount = document.getElementById('funnel-chart-mount');
+      if (funnelMount && window.ChartEngine.renderFunnelFlowChart) {
+        window.ChartEngine.renderFunnelFlowChart(funnelMount);
+      }
+    }
   }
 
   function renderChart(timelineData) {
     if (!chartContainer || !timelineData) return;
+
+    const scrubberHeaderSpan = document.querySelector('.timeline-scrubber-box .scrubber-header span:first-child');
+    if (scrubberHeaderSpan && timelineData.length) {
+      scrubberHeaderSpan.innerHTML = `Timeline Scrubber: <strong>${timelineData[0].year}</strong> to <strong>${timelineData[timelineData.length - 1].year}</strong>`;
+    }
 
     // Set slider bounds
     if (timelineSlider) {
@@ -653,19 +772,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 150);
   });
 
-  // Initial Load dynamically based on path
-  const pathParts = window.location.pathname.split('/').filter(Boolean);
-  let researchIdToLoad = 'google-ads-cac-2015-2026'; // fallback
+  // Initial Load dynamically based on body attribute or path
+  const bodyResearchId = document.body.getAttribute('data-research-id');
+  const pathParts = window.location.pathname.split('/').filter(p => p && p !== 'index.html');
+  let researchIdToLoad = bodyResearchId || 'google-ads-cac-2015-2026'; // fallback
   
-  if (pathParts.length > 0) {
+  if (!bodyResearchId && pathParts.length > 0) {
     const lastPart = pathParts[pathParts.length - 1];
     if (window.RESEARCH_DATABASE && window.RESEARCH_DATABASE[lastPart]) {
       researchIdToLoad = lastPart;
-    } else {
-      // In case they are using the old folder name which had dashes
-      if (lastPart.includes('google-ads-unit-economics')) {
-        researchIdToLoad = 'google-ads-cac-2015-2026';
-      }
+    } else if (lastPart.includes('google-ads-unit-economics')) {
+      researchIdToLoad = 'google-ads-cac-2015-2026';
+    } else if (lastPart.includes('insurance-acquisition') || lastPart.includes('insurance-cac-crisis')) {
+      researchIdToLoad = 'the-insurance-cac-crisis';
     }
   }
   loadResearch(researchIdToLoad);

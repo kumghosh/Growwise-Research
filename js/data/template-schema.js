@@ -159,7 +159,8 @@ window.RESEARCH_DATABASE["b2b-saas-ltv-cac-2026"] = {
   ]
 };
 
-// Register the new Insurance AI report if the data script is loaded
+// Register the Insurance report under both canonical and legacy slugs
 if (window.INSURANCE_AI_DATA) {
+  window.RESEARCH_DATABASE["the-insurance-cac-crisis"] = window.INSURANCE_AI_DATA;
   window.RESEARCH_DATABASE["insurance-acquisition-ai-cac"] = window.INSURANCE_AI_DATA;
 }
