@@ -123,11 +123,11 @@ window.RESEARCH_DATABASE["google-ads-cac-2015-2026"] = {
   // Multi-Channel Cost-Per-Acquisition Comparison (2026 Current vs 2018 Baseline)
   // Restrained to 3 muted editorial tones: Slate Teal, Slate Gray, and Muted Sage
   channelComparison: [
-    { channel: "Google Search (Non-Brand)", cac2018: 62.50, cac2026: 142.80, efficiencyIndex: 68, color: "#0F766E" },
-    { channel: "Google Performance Max", cac2018: 45.00, cac2026: 118.50, efficiencyIndex: 74, color: "#0F766E" },
-    { channel: "Meta (IG & FB Ads)", cac2018: 52.10, cac2026: 135.20, efficiencyIndex: 71, color: "#334155" },
-    { channel: "TikTok Commercial Ads", cac2018: 28.40, cac2026: 96.40, efficiencyIndex: 82, color: "#334155" },
-    { channel: "SEO / Content Inbound", cac2018: 18.20, cac2026: 48.60, efficiencyIndex: 94, color: "#059669" }
+    { channel: "Google Search (Non-Brand)", cac2018: 62.50, cac2026: 142.80, efficiencyIndex: 68, color: "#0F141A" },
+    { channel: "Google Performance Max", cac2018: 45.00, cac2026: 118.50, efficiencyIndex: 74, color: "#0D9488" },
+    { channel: "Meta (IG & FB Ads)", cac2018: 52.10, cac2026: 135.20, efficiencyIndex: 71, color: "#0A1E36" },
+    { channel: "TikTok Commercial Ads", cac2018: 28.40, cac2026: 96.40, efficiencyIndex: 82, color: "#E11D48" },
+    { channel: "SEO / Content Inbound", cac2018: 18.20, cac2026: 48.60, efficiencyIndex: 94, color: "#475569" }
   ],
 
   // Strategic Imperatives (McKinsey 3-Box Framework)

@@ -121,15 +121,6 @@ document.addEventListener('DOMContentLoaded', () => {
     `).join('');
 
     mastheadEl.innerHTML = `
-      <div class="masthead-meta-row">
-        <span class="pill pill-teal">${meta.category || 'Research Report'}</span>
-        <span>•</span>
-        <span>${meta.volume || 'Vol. IX'}</span>
-        <span>•</span>
-        <span>${meta.publishDate}</span>
-        <span>•</span>
-        <span>${meta.readTime}</span>
-      </div>
       <h1 class="article-title">${meta.title}</h1>
       <p class="article-deck">${meta.deck}</p>
       <div class="author-block">
@@ -333,11 +324,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (simDiagnosisBadge) {
       simDiagnosisBadge.textContent = res.statusLabel;
       if (res.status === 'healthy') {
-        simDiagnosisBadge.className = 'pill pill-teal';
+        simDiagnosisBadge.className = 'pill';
       } else if (res.status === 'warning') {
-        simDiagnosisBadge.className = 'pill pill-amber';
+        simDiagnosisBadge.className = 'pill';
       } else {
-        simDiagnosisBadge.className = 'pill pill-rose';
+        simDiagnosisBadge.className = 'pill';
       }
       simDiagnosisBadge.style.backgroundColor = '';
       simDiagnosisBadge.style.color = '';

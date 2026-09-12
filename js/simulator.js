@@ -70,7 +70,7 @@ window.SimulatorEngine = {
       recommendation = 'Customer acquisition cost exceeds unit gross profit. Mandate strict negative keyword exclusions, prune non-converting search terms, and shift focus to organic retention loops.';
     } else if (netMarginPct < 12 || cacRatioPct > 55) {
       status = 'warning';
-      statusLabel = 'Compressed Margin';
+      statusLabel = 'Margin Squeeze';
       statusColor = '#D97706';
       recommendation = 'Auction inflation is compressing operating margin. Restructure pricing or implement first-order cross-sell packages to lift average basket size.';
     }
