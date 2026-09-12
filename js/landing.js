@@ -53,57 +53,46 @@ document.addEventListener('DOMContentLoaded', () => {
       const kpi1 = item.kpis && item.kpis[0] ? item.kpis[0] : null;
       const kpi2 = item.kpis && item.kpis[1] ? item.kpis[1] : null;
 
+      // Map Growwise Colors for KPI blocks
+      const colorClasses = ['bg-teal', 'bg-dark', 'bg-white', 'bg-paper', 'bg-navy'];
+      const c1 = isFeatured ? 'bg-teal' : 'bg-paper';
+      const c2 = isFeatured ? 'bg-dark' : 'bg-white';
+
       html += `
-        <a href="${href}" class="${cardClass}" style="text-decoration:none !important;color:inherit !important;">
-          <div>
-            <div class="bento-kicker-row">
-              <span class="bento-kicker-pill">${item.meta.category || 'Executive Research'}</span>
-              <span>&bull;</span>
-              <span>${item.meta.volume || 'Vol. IX'}</span>
-              <span>&bull;</span>
-              <span>${item.meta.publishDate || '2026'}</span>
-              <span>&bull;</span>
-              <span>${item.meta.readTime || '3 min read'}</span>
-            </div>
-
-            <h2 class="bento-title">${item.meta.title}</h2>
-            <p class="bento-deck">${item.meta.deck}</p>
-
-            ${(kpi1 || kpi2) ? `
-              <div class="bento-metrics-row">
-                ${kpi1 ? `
-                  <div>
-                    <div class="bento-metric-val">
-                      ${kpi1.value}
-                      ${kpi1.change ? `<span class="bento-metric-delta">(${kpi1.change})</span>` : ''}
-                    </div>
-                    <div class="bento-metric-label">${kpi1.title}</div>
-                  </div>
-                ` : ''}
-                ${kpi2 ? `
-                  <div>
-                    <div class="bento-metric-val">
-                      ${kpi2.value}
-                      ${kpi2.change ? `<span class="bento-metric-delta">(${kpi2.change})</span>` : ''}
-                    </div>
-                    <div class="bento-metric-label">${kpi2.title}</div>
-                  </div>
-                ` : ''}
-              </div>
-            ` : ''}
+        <!-- Main Narrative Block -->
+        <a href="${href}" class="mb-block mb-main ${isFeatured ? 'bg-dark' : 'bg-white'}" style="grid-column: span 8; grid-row: span ${kpi1 && kpi2 ? '2' : '1'};">
+          <div class="mb-content-top">
+            <div class="mb-kicker">${item.meta.category || 'Executive Research'}</div>
+            <h2 class="mb-title">${item.meta.title}</h2>
+            <p class="mb-deck">${item.meta.deck}</p>
           </div>
-
-          <div class="bento-footer">
-            <div class="bento-authors">
-              <div class="bento-avatar-stack">
-                ${authorAvatars}
-              </div>
-              <span class="bento-author-names">By ${authorNames}</span>
-            </div>
-            <span class="bento-read-link">Read Research Brief &rarr;</span>
+          <div class="mb-content-bottom">
+            <span class="mb-read-btn">By ${authorNames} &rarr;</span>
           </div>
         </a>
       `;
+
+      if (kpi1) {
+        html += `
+        <!-- KPI 1 Block -->
+        <a href="${href}" class="mb-block mb-kpi ${c1}" style="grid-column: span 4;">
+          <div class="mb-kpi-val">${kpi1.value}</div>
+          <div class="mb-kpi-title">${kpi1.title}</div>
+          <div class="mb-kpi-sub">${kpi1.change ? `(${kpi1.change})` : ''}</div>
+        </a>
+        `;
+      }
+
+      if (kpi2) {
+        html += `
+        <!-- KPI 2 Block -->
+        <a href="${href}" class="mb-block mb-kpi ${c2}" style="grid-column: span 4;">
+          <div class="mb-kpi-val">${kpi2.value}</div>
+          <div class="mb-kpi-title">${kpi2.title}</div>
+          <div class="mb-kpi-sub">${kpi2.change ? `(${kpi2.change})` : ''}</div>
+        </a>
+        `;
+      }
     });
 
     if (!html) {
