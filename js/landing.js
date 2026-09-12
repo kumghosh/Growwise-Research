@@ -54,15 +54,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const kpi2 = item.kpis && item.kpis[1] ? item.kpis[1] : null;
 
       html += `
-        <a href="${href}" class="${cardClass}">
+        <a href="${href}" class="${cardClass}" style="text-decoration:none !important;color:inherit !important;">
           <div>
-            <div class="bento-meta-row">
-              <span class="pill pill-teal">${item.meta.category || 'Research Report'}</span>
-              <span>•</span>
+            <div class="bento-kicker-row">
+              <span class="bento-kicker-pill">${item.meta.category || 'Executive Research'}</span>
+              <span>&bull;</span>
               <span>${item.meta.volume || 'Vol. IX'}</span>
-              <span>•</span>
+              <span>&bull;</span>
               <span>${item.meta.publishDate || '2026'}</span>
-              <span>•</span>
+              <span>&bull;</span>
               <span>${item.meta.readTime || '3 min read'}</span>
             </div>
 
@@ -73,13 +73,19 @@ document.addEventListener('DOMContentLoaded', () => {
               <div class="bento-metrics-row">
                 ${kpi1 ? `
                   <div>
-                    <div class="bento-metric-val">${kpi1.value} <span style="font-size:0.85rem;color:var(--color-brand-rose);">${kpi1.change || ''}</span></div>
+                    <div class="bento-metric-val">
+                      ${kpi1.value}
+                      ${kpi1.change ? `<span class="bento-metric-delta">(${kpi1.change})</span>` : ''}
+                    </div>
                     <div class="bento-metric-label">${kpi1.title}</div>
                   </div>
                 ` : ''}
                 ${kpi2 ? `
                   <div>
-                    <div class="bento-metric-val">${kpi2.value} <span style="font-size:0.85rem;color:var(--color-brand-teal);">${kpi2.change || ''}</span></div>
+                    <div class="bento-metric-val">
+                      ${kpi2.value}
+                      ${kpi2.change ? `<span class="bento-metric-delta">(${kpi2.change})</span>` : ''}
+                    </div>
                     <div class="bento-metric-label">${kpi2.title}</div>
                   </div>
                 ` : ''}
@@ -92,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <div class="bento-avatar-stack">
                 ${authorAvatars}
               </div>
-              <span class="bento-author-names">${authorNames}</span>
+              <span class="bento-author-names">By ${authorNames}</span>
             </div>
             <span class="bento-read-link">Read Research Brief &rarr;</span>
           </div>

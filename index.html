@@ -16,10 +16,286 @@
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Core Stylesheets -->
-  <link rel="stylesheet" href="css/design-tokens.css?v=2">
-  <link rel="stylesheet" href="css/layout.css?v=2">
-  <link rel="stylesheet" href="css/components.css?v=2">
-  <link rel="stylesheet" href="css/animations.css?v=2">
+  <link rel="stylesheet" href="css/design-tokens.css?v=20260912-3">
+  <link rel="stylesheet" href="css/layout.css?v=20260912-3">
+  <link rel="stylesheet" href="css/components.css?v=20260912-3">
+  <link rel="stylesheet" href="css/animations.css?v=20260912-3">
+
+  <!-- Critical Editorial Landing & Bento Grid Styles (Guarantees Instant Render Across CDNs) -->
+  <style id="critical-landing-styles">
+    /* Landing Hero */
+    .landing-hero {
+      padding: clamp(2.5rem, 5vw, 4rem) 0 clamp(1.5rem, 3vw, 2.5rem);
+      border-bottom: 1px solid var(--color-border-subtle);
+      margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+    }
+    .landing-hero-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 0 1rem;
+    }
+    .landing-title {
+      font-family: var(--font-editorial);
+      font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+      line-height: 1.12;
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      color: var(--color-ink-primary);
+      margin: 0 0 1rem;
+    }
+    .landing-deck {
+      font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+      line-height: 1.65;
+      color: var(--color-ink-secondary);
+      max-width: 640px;
+      margin: 0 auto 2rem;
+    }
+    /* Minimalist Filter Navigation */
+    .landing-filters-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding-bottom: 0.25rem;
+    }
+    @media (max-width: 640px) {
+      .landing-filters-row {
+        justify-content: flex-start;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding: 0.25rem 0.5rem 0.5rem;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .landing-filters-row::-webkit-scrollbar {
+        display: none;
+      }
+    }
+    .landing-filter-pill {
+      padding: 0.4rem 1rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--color-border-medium);
+      background: var(--color-surface);
+      color: var(--color-ink-secondary);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all var(--transition-fast);
+      text-decoration: none;
+    }
+    .landing-filter-pill:hover {
+      border-color: var(--color-ink-primary);
+      color: var(--color-ink-primary);
+    }
+    .landing-filter-pill.active {
+      background: var(--color-ink-primary);
+      color: var(--color-surface);
+      border-color: var(--color-ink-primary);
+    }
+    /* Bento Grid System */
+    .bento-grid-container {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.75rem;
+      margin-top: 1rem;
+      margin-bottom: 4rem;
+    }
+    /* Bento Card Anchor Reset */
+    a.bento-card,
+    a.bento-card:link,
+    a.bento-card:visited,
+    a.bento-card:hover,
+    a.bento-card:active {
+      text-decoration: none !important;
+      color: inherit !important;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: 16px;
+      padding: clamp(1.5rem, 3vw, 2.5rem);
+      position: relative;
+      transition: border-color 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      cursor: pointer;
+    }
+    a.bento-card * {
+      text-decoration: none !important;
+    }
+    a.bento-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--color-ink-primary);
+      box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.08);
+    }
+    [data-theme="dark"] a.bento-card {
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+    [data-theme="dark"] a.bento-card:hover {
+      border-color: rgba(255, 255, 255, 0.35);
+      box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.6);
+    }
+    .bento-card-featured {
+      grid-column: span 12;
+    }
+    @media (min-width: 960px) {
+      .bento-card-featured {
+        grid-column: span 8;
+      }
+      .bento-card-secondary {
+        grid-column: span 4;
+      }
+    }
+    @media (max-width: 959px) {
+      .bento-card-featured,
+      .bento-card-secondary {
+        grid-column: span 12;
+      }
+    }
+    /* Card Kicker & Meta */
+    .bento-kicker-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-ink-muted);
+      margin-bottom: 1.1rem;
+    }
+    .bento-kicker-pill {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-ink-primary);
+      border-bottom: 1px solid var(--color-ink-primary);
+      padding-bottom: 1px;
+    }
+    .bento-title {
+      font-family: var(--font-editorial);
+      font-size: clamp(1.45rem, 2.2vw, 1.95rem);
+      line-height: 1.25;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      color: var(--color-ink-primary) !important;
+      margin: 0 0 0.85rem;
+      transition: color var(--transition-fast);
+    }
+    .bento-card-featured .bento-title {
+      font-size: clamp(1.75rem, 2.8vw, 2.35rem);
+      line-height: 1.2;
+    }
+    a.bento-card:hover .bento-title {
+      color: var(--color-ink-primary) !important;
+      text-decoration: underline !important;
+      text-decoration-thickness: 1.5px !important;
+      text-underline-offset: 4px !important;
+    }
+    [data-theme="dark"] a.bento-card:hover .bento-title {
+      color: #FFFFFF !important;
+    }
+    .bento-deck {
+      font-size: clamp(0.88rem, 1vw, 0.98rem);
+      line-height: 1.6;
+      color: var(--color-ink-secondary) !important;
+      margin: 0 0 1.5rem;
+    }
+    /* Clean Editorial Metrics */
+    .bento-metrics-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      padding: 1.25rem 0;
+      margin: 1.25rem 0;
+      border-top: 1px solid var(--color-border-subtle);
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+    @media (max-width: 480px) {
+      .bento-metrics-row {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+      }
+    }
+    .bento-metric-val {
+      font-family: var(--font-sans);
+      font-size: clamp(1.35rem, 2vw, 1.65rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--color-ink-primary) !important;
+      letter-spacing: -0.02em;
+    }
+    .bento-metric-delta {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--color-ink-muted);
+      margin-left: 0.35rem;
+      letter-spacing: 0;
+    }
+    .bento-metric-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-ink-muted) !important;
+      margin-top: 0.35rem;
+    }
+    /* Card Footer: Authors & Action */
+    .bento-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--color-border-subtle);
+    }
+    .bento-authors {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+    .bento-avatar-stack {
+      display: flex;
+    }
+    .bento-avatar-stack .author-avatar {
+      margin-right: -0.4rem;
+      width: 28px;
+      height: 28px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      border-radius: var(--radius-full);
+      background: var(--color-paper-subtle);
+      color: var(--color-ink-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--color-surface);
+    }
+    .bento-author-names {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--color-ink-primary) !important;
+    }
+    .bento-read-link {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--color-ink-primary) !important;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: transform var(--transition-fast);
+    }
+    a.bento-card:hover .bento-read-link {
+      transform: translateX(4px);
+    }
+  </style>
 </head>
 <body>
 
@@ -41,10 +317,9 @@
 
   <!-- Page Main Flow -->
   <main class="page-wrapper">
-    <!-- Landing Hero -->
+    <!-- Landing Hero: Ultra-Clean McKinsey Editorial -->
     <section class="landing-hero">
       <div class="landing-hero-inner">
-        <span class="pill pill-teal">Growwise Research Institute</span>
         <h1 class="landing-title">Empirical Intelligence &amp; Strategic Economics</h1>
         <p class="landing-deck">
           Independent quantitative benchmarks, ad auction inflation models, and empirical unit economics frameworks for enterprise leadership and capital allocators.
@@ -52,7 +327,7 @@
 
         <!-- Topic Filter Controls -->
         <div class="landing-filters-row">
-          <button class="landing-filter-pill active" data-filter="all">All Publications</button>
+          <button class="landing-filter-pill active" data-filter="all">All Research</button>
           <button class="landing-filter-pill" data-filter="performance marketing">Performance Marketing</button>
           <button class="landing-filter-pill" data-filter="economics">Unit Economics</button>
           <button class="landing-filter-pill" data-filter="software">B2B SaaS</button>
